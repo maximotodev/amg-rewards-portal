@@ -1,0 +1,46 @@
+:host {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  display: block;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.main-header {
+  background-color: #1e3a8a; // AMG Navy Blue
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  p {
+    margin: 0.5rem 0 0;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+}
+
+.form-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  margin-bottom: 2rem;
+}
+
+.main-footer {
+  text-align: center;
+  padding: 3rem 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}

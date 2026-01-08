@@ -1,0 +1,39 @@
+<div class="form-card">
+  <h2>Submit Receipt</h2>
+  <p class="subtitle">Upload your purchase details to earn loyalty points.</p>
+
+  <form [formGroup]="receiptForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label for="merchant">Merchant Name</label>
+      <input
+        id="merchant"
+        formControlName="merchant_name"
+        type="text"
+        placeholder="e.g. Stop & Shop"
+      />
+      @if (receiptForm.get('merchant_name')?.invalid && receiptForm.get('merchant_name')?.touched) {
+      <small class="error">Merchant name is required (min 2 chars).</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="amount">Total Amount ($)</label>
+      <input
+        id="amount"
+        formControlName="total_amount"
+        type="number"
+        step="0.01"
+        placeholder="0.00"
+      />
+    </div>
+
+    <div class="field">
+      <label for="date">Purchase Date</label>
+      <input id="date" formControlName="purchase_date" type="date" />
+    </div>
+
+    <button type="submit" [disabled]="receiptForm.invalid || isSubmitting()">
+      @if (isSubmitting()) { Processing... } @else { Submit for Points }
+    </button>
+  </form>
+</div>

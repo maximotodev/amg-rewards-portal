@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:8.4
+    container_name: amg_mysql
+    environment:
+      MYSQL_DATABASE: amg_rewards
+      MYSQL_USER: amg
+      MYSQL_PASSWORD: amgpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
