@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ReceiptListComponent } from './receipt-list'; // Fix: Use correct class name
 
-import { ReceiptList } from './receipt-list';
-
-describe('ReceiptList', () => {
-  let component: ReceiptList;
-  let fixture: ComponentFixture<ReceiptList>;
-
+describe('ReceiptListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReceiptList]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(ReceiptList);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
+      imports: [ReceiptListComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    }).compileComponents();
   });
 
   it('should create', () => {
+    const fixture = TestBed.createComponent(ReceiptListComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

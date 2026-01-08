@@ -19,7 +19,6 @@ export class ReceiptService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8000/api/v1/receipts';
 
-  // Using a Signal to manage state (Senior Angular pattern)
   receipts = signal<Receipt[]>([]);
 
   fetchReceipts(): void {
@@ -28,9 +27,17 @@ export class ReceiptService {
     });
   }
 
-  submitReceipt(receipt: Receipt): Observable<Receipt> {
-    return this.http.post<Receipt>(this.apiUrl, receipt).pipe(
-      tap(() => this.fetchReceipts()) // Refresh list after submission
-    );
+  /**
+   * Atomic Submission: Packages metadata and binary image into one FormData request.
+   */
+  submitReceipt(receipt: Receipt, imageFile: File): Observable<Receipt> {
+    const formData = new FormData();
+    formData.append('user_id', receipt.user_id);
+    formData.append('merchant_name', receipt.merchant_name);
+    formData.append('total_amount', receipt.total_amount.toString());
+    formData.append('purchase_date', receipt.purchase_date);
+    formData.append('image', imageFile);
+
+    return this.http.post<Receipt>(this.apiUrl, formData).pipe(tap(() => this.fetchReceipts()));
   }
 }
