@@ -1,17 +1,23 @@
 from sqlalchemy.orm import Session
-from app.models.receipt import Receipt
+from app.models.receipt import Receipt, ReceiptStatus
 from app.schemas.receipt import ReceiptCreate
+from app.repositories.receipts import ReceiptRepository
 
-def calculate_points(amount: float) -> int:
-    # AMG Logic: 10 points per dollar
-    return int(amount * 10)
+class ReceiptService:
+    def __init__(self, db: Session):
+        self.repo = ReceiptRepository(db)
 
-def create_receipt_logic(db: Session, data: ReceiptCreate) -> Receipt:
-    new_receipt = Receipt(
-        **data.model_dump(),
-        points_earned=calculate_points(data.total_amount)
-    )
-    db.add(new_receipt)
-    db.commit()
-    db.refresh(new_receipt)
-    return new_receipt
+    def calculate_points(self, amount: float) -> int:
+        # AMG Logic: 10 points per dollar
+        return int(amount * 10)
+
+    def process_submission(self, data: ReceiptCreate) -> Receipt:
+        # Business Logic: Point calculation happens here
+        points = self.calculate_points(data.total_amount)
+        
+        new_receipt = Receipt(
+            **data.model_dump(),
+            points_earned=points,
+            status=ReceiptStatus.pending
+        )
+        return self.repo.create(new_receipt)

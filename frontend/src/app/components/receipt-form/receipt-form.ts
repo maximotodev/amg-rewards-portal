@@ -16,7 +16,16 @@ export class ReceiptFormComponent {
 
   // Signal to track loading state
   isSubmitting = signal(false);
+  // Add this to your class
+  selectedFile: File | null = null;
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      console.log("File ready for 'Snap' logic:", file.name);
+    }
+  }
   receiptForm = this.fb.group({
     user_id: ['AMG_USER_01'],
     merchant_name: ['', [Validators.required, Validators.minLength(2)]],

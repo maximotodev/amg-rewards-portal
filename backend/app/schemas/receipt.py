@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict # Added ConfigDict
 from datetime import date
 from typing import Literal
 
@@ -9,6 +9,9 @@ class ReceiptCreate(BaseModel):
     purchase_date: date
 
 class ReceiptOut(BaseModel):
+    # Professional Pydantic V2 configuration
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: str
     merchant_name: str
@@ -16,6 +19,3 @@ class ReceiptOut(BaseModel):
     purchase_date: date
     status: str
     points_earned: int
-
-    class Config:
-        from_attributes = True
